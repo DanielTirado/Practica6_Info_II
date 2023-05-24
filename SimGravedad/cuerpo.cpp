@@ -102,8 +102,8 @@ void cuerpo::setMasa(float value)
 void cuerpo::aceleracion(float m2, float x2, float y2)
 {
 
-    double r=0;
-    double alpha=0;
+    float r=0;
+    float alpha=0;
 
     r = sqrt(pow((x2-x),2) + pow((y2-y),2));
 

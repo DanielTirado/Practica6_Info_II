@@ -24,10 +24,18 @@ MainWindow::~MainWindow()
 
 void MainWindow::Actualizar()
 {
+
+    string namefile;
+
+    if (Nsistema == '1') namefile = "sistema1.txt";
+    else namefile = "sistema2.txt";
+
+    ofstream archivo(namefile,ofstream::app);
+
     int j=0,r=0;
     float masa, posx, posy;
 
-    for (r=0 ; r<50 ; r++)
+    for (r=0 ; r<11; r++)
     {
         for (j=0 ; j < sistema.length(); j++)
         {
@@ -42,24 +50,16 @@ void MainWindow::Actualizar()
                 }
                 sistema[j]->velocidades();
                 sistema[j]->posiciones();
+                archivo << sistema[j]->getX() << "\t";
+                archivo << sistema[j]->getY() << "\t";
 
                 sistema[j]->setAx(0);
                 sistema[j]->setAy(0);
         }
+        archivo << endl;
     }
-
-    string namefile;
-
-    if (Nsistema == '1') namefile = "sistema1";
-    else namefile = "sistema2";
-
-    ofstream archivo(namefile);
-    for (int i=0; i < sistema.length(); i++){
-        archivo << sistema[i]->getX() << "/t";
-        archivo << sistema[i]->getY() << "/t";
-    }
-    archivo << endl;
     archivo.close();
+
 }
 
 
@@ -78,9 +78,17 @@ void MainWindow::on_sistema1_btn_clicked()
         scene->addItem(sistema.last());
 
         secuencia = true;
+        Nsistema = '1';
     }
 
-    Nsistema = '1';
+    ofstream archivo("sistema1.txt");
+    for (int i=0; i < sistema.length(); i++){
+        archivo << sistema[i]->getX() << "\t";
+        archivo << sistema[i]->getY() << "\t";
+    }
+    archivo << endl;
+    archivo.close();
+
 }
 
 void MainWindow::on_sistema2_btn_clicked()
@@ -105,8 +113,16 @@ void MainWindow::on_sistema2_btn_clicked()
 
 
         secuencia = true;
+        Nsistema = '2';
     }
-    Nsistema = '2';
+
+    ofstream archivo("sistema2.txt");
+    for (int i=0; i < sistema.length(); i++){
+        archivo << sistema[i]->getX() << "\t";
+        archivo << sistema[i]->getY() << "\t";
+    }
+    archivo << endl;
+    archivo.close();
 }
 
 void MainWindow::on_finalizar_btn_clicked()
